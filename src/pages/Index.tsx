@@ -1,12 +1,273 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import React, { useState } from 'react';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { toast } from "@/hooks/use-toast";
+import { Flower2, Heart, Mic, TrendingUp, Moon, Sun, Check } from 'lucide-react';
 
 const Index = () => {
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isDark, setIsDark] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email) {
+      // Store in localStorage as placeholder
+      const waitlistData = { email, name, timestamp: new Date().toISOString() };
+      localStorage.setItem('bloomlog-waitlist', JSON.stringify(waitlistData));
+      
+      setIsSubmitted(true);
+      toast({
+        title: "Welcome to Bloomlog! 🌱",
+        description: "You're on the waitlist. We'll be in touch soon!",
+      });
+    }
+  };
+
+  const toggleTheme = () => {
+    setIsDark(!isDark);
+    document.documentElement.classList.toggle('dark');
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div className={`min-h-screen transition-colors duration-300 ${isDark ? 'dark' : ''}`}>
+      {/* Theme Toggle */}
+      <button
+        onClick={toggleTheme}
+        className="fixed top-6 right-6 z-50 p-3 rounded-full bg-white/80 dark:bg-bloom-navy/80 backdrop-blur-sm border border-bloom-green/20 hover:scale-110 transition-transform duration-200"
+        aria-label="Toggle theme"
+      >
+        {isDark ? <Sun className="w-5 h-5 text-bloom-coral" /> : <Moon className="w-5 h-5 text-bloom-navy" />}
+      </button>
+
+      {/* Hero Section */}
+      <section className="relative min-h-screen bg-bloom-gradient dark:bg-gradient-to-br dark:from-bloom-navy dark:to-bloom-navy/90 flex items-center justify-center overflow-hidden">
+        {/* Floating elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-20 left-10 w-20 h-20 bg-bloom-coral/20 rounded-full animate-float"></div>
+          <div className="absolute top-40 right-20 w-16 h-16 bg-bloom-teal/20 rounded-full animate-float" style={{ animationDelay: '2s' }}></div>
+          <div className="absolute bottom-40 left-20 w-12 h-12 bg-bloom-lavender/30 rounded-full animate-float" style={{ animationDelay: '4s' }}></div>
+        </div>
+
+        <div className="container mx-auto px-6 text-center relative z-10">
+          <div className="animate-fade-in">
+            {/* Logo/Icon */}
+            <div className="mb-8 flex justify-center">
+              <div className="p-4 bg-white/20 dark:bg-white/10 rounded-full backdrop-blur-sm animate-bloom">
+                <Flower2 className="w-16 h-16 text-bloom-teal dark:text-bloom-green" />
+              </div>
+            </div>
+
+            {/* Title */}
+            <h1 className="font-playfair text-6xl md:text-7xl lg:text-8xl font-bold text-bloom-navy dark:text-bloom-cream mb-6 text-balance">
+              Bloomlog
+            </h1>
+
+            {/* Tagline */}
+            <p className="text-xl md:text-2xl lg:text-3xl text-bloom-navy/80 dark:text-bloom-cream/80 mb-12 font-light max-w-2xl mx-auto text-balance">
+              Grow through reflection. Just one minute a day.
+            </p>
+
+            {/* CTA Form */}
+            {!isSubmitted ? (
+              <form onSubmit={handleSubmit} className="max-w-md mx-auto space-y-4">
+                <div className="space-y-3">
+                  <Input
+                    type="text"
+                    placeholder="Your name (optional)"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="w-full px-6 py-4 text-lg bg-white/90 dark:bg-bloom-navy/90 border-bloom-green/30 focus:border-bloom-teal rounded-full"
+                  />
+                  <Input
+                    type="email"
+                    placeholder="Your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="w-full px-6 py-4 text-lg bg-white/90 dark:bg-bloom-navy/90 border-bloom-green/30 focus:border-bloom-teal rounded-full"
+                  />
+                </div>
+                <Button 
+                  type="submit"
+                  className="w-full py-4 text-lg bg-bloom-teal hover:bg-bloom-teal/90 text-white rounded-full font-medium transition-all duration-200 hover:scale-105 hover:shadow-lg"
+                >
+                  Join the waitlist 🌱
+                </Button>
+              </form>
+            ) : (
+              <div className="max-w-md mx-auto p-8 bg-white/90 dark:bg-bloom-navy/90 rounded-2xl backdrop-blur-sm">
+                <div className="flex items-center justify-center mb-4">
+                  <div className="p-3 bg-bloom-green/20 rounded-full">
+                    <Check className="w-8 h-8 text-bloom-teal" />
+                  </div>
+                </div>
+                <h3 className="text-xl font-semibold text-bloom-navy dark:text-bloom-cream mb-2">You're in! 🎉</h3>
+                <p className="text-bloom-navy/70 dark:text-bloom-cream/70">
+                  Welcome to the Bloomlog family. We'll let you know when we're ready to help you grow.
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section className="py-20 lg:py-32 bg-bloom-beige dark:bg-bloom-navy">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="font-playfair text-4xl md:text-5xl font-bold text-bloom-navy dark:text-bloom-cream mb-8">
+              Journaling is hard to stick with.
+            </h2>
+            <p className="text-xl md:text-2xl text-bloom-navy/70 dark:text-bloom-cream/70 mb-12 leading-relaxed">
+              We get it. Life is busy, and finding time for deep reflection feels impossible. 
+              That's why Bloomlog calls you to journal, makes it easy, quick, and personal.
+            </p>
+            <div className="bg-white/60 dark:bg-bloom-navy/60 backdrop-blur-sm rounded-2xl p-8 md:p-12">
+              <p className="text-lg md:text-xl text-bloom-navy dark:text-bloom-cream font-medium italic">
+                "Just one minute a day can transform how you understand yourself and navigate your emotions."
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-20 lg:py-32 bg-white/40 dark:bg-bloom-navy/40">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="font-playfair text-4xl md:text-5xl font-bold text-bloom-navy dark:text-bloom-cream mb-6">
+              Designed for your busy life
+            </h2>
+            <p className="text-xl text-bloom-navy/70 dark:text-bloom-cream/70 max-w-2xl mx-auto">
+              Simple features that make mindful reflection a natural part of your day.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+            {/* Feature 1 */}
+            <div className="text-center group">
+              <div className="w-20 h-20 mx-auto mb-6 bg-bloom-green/20 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+                <Heart className="w-10 h-10 text-bloom-teal" />
+              </div>
+              <h3 className="font-semibold text-xl text-bloom-navy dark:text-bloom-cream mb-3">1-Minute Reflections</h3>
+              <p className="text-bloom-navy/70 dark:text-bloom-cream/70 leading-relaxed">
+                Quick, thoughtful prompts that fit into any moment of your day.
+              </p>
+            </div>
+
+            {/* Feature 2 */}
+            <div className="text-center group">
+              <div className="w-20 h-20 mx-auto mb-6 bg-bloom-lavender/20 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+                <div className="text-2xl">😊</div>
+              </div>
+              <h3 className="font-semibold text-xl text-bloom-navy dark:text-bloom-cream mb-3">Mood Check-ins</h3>
+              <p className="text-bloom-navy/70 dark:text-bloom-cream/70 leading-relaxed">
+                Track your emotional journey with simple, intuitive emoji selections.
+              </p>
+            </div>
+
+            {/* Feature 3 */}
+            <div className="text-center group">
+              <div className="w-20 h-20 mx-auto mb-6 bg-bloom-coral/20 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+                <Mic className="w-10 h-10 text-bloom-teal" />
+              </div>
+              <h3 className="font-semibold text-xl text-bloom-navy dark:text-bloom-cream mb-3">Voice Journaling</h3>
+              <p className="text-bloom-navy/70 dark:text-bloom-cream/70 leading-relaxed">
+                Call in your thoughts when typing isn't convenient. Coming soon.
+              </p>
+            </div>
+
+            {/* Feature 4 */}
+            <div className="text-center group">
+              <div className="w-20 h-20 mx-auto mb-6 bg-bloom-teal/20 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+                <TrendingUp className="w-10 h-10 text-bloom-teal" />
+              </div>
+              <h3 className="font-semibold text-xl text-bloom-navy dark:text-bloom-cream mb-3">AI Insights</h3>
+              <p className="text-bloom-navy/70 dark:text-bloom-cream/70 leading-relaxed">
+                Gentle summaries of your emotional patterns and growth over time.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Signup Section */}
+      <section className="py-20 lg:py-32 bg-bloom-gradient-soft dark:bg-gradient-to-br dark:from-bloom-navy dark:via-bloom-navy/95 dark:to-bloom-navy">
+        <div className="container mx-auto px-6 text-center">
+          <div className="max-w-2xl mx-auto">
+            <h2 className="font-playfair text-4xl md:text-5xl font-bold text-bloom-navy dark:text-bloom-cream mb-6">
+              Be the first to try Bloomlog
+            </h2>
+            <p className="text-xl text-bloom-navy/70 dark:text-bloom-cream/70 mb-12">
+              Join our growing community of mindful reflectors. We're launching soon.
+            </p>
+
+            {!isSubmitted && (
+              <form onSubmit={handleSubmit} className="max-w-md mx-auto space-y-4">
+                <div className="space-y-3">
+                  <Input
+                    type="text"
+                    placeholder="Your name (optional)"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="w-full px-6 py-4 text-lg bg-white/90 dark:bg-bloom-navy/90 border-bloom-green/30 focus:border-bloom-teal rounded-full"
+                  />
+                  <Input
+                    type="email"
+                    placeholder="Your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="w-full px-6 py-4 text-lg bg-white/90 dark:bg-bloom-navy/90 border-bloom-green/30 focus:border-bloom-teal rounded-full"
+                  />
+                </div>
+                <Button 
+                  type="submit"
+                  className="w-full py-4 text-lg bg-bloom-teal hover:bg-bloom-teal/90 text-white rounded-full font-medium transition-all duration-200 hover:scale-105 hover:shadow-xl"
+                >
+                  Get early access ✨
+                </Button>
+              </form>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-16 bg-bloom-navy dark:bg-bloom-navy/90 text-bloom-cream">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-8">
+            <div className="flex justify-center mb-6">
+              <Flower2 className="w-8 h-8 text-bloom-green" />
+            </div>
+            <h3 className="font-playfair text-2xl font-bold mb-4">Bloomlog</h3>
+            
+            {/* Privacy Note */}
+            <div className="bg-bloom-teal/10 rounded-xl p-6 mb-8 max-w-2xl mx-auto">
+              <p className="text-bloom-cream/90 font-medium">
+                🔒 Your thoughts are your own. We'll never sell your data.
+              </p>
+              <p className="text-bloom-cream/70 text-sm mt-2">
+                Privacy-first journaling, always.
+              </p>
+            </div>
+            
+            {/* Social Links */}
+            <div className="flex justify-center space-x-6 mb-8 text-bloom-cream/70">
+              <a href="#" className="hover:text-bloom-green transition-colors">Twitter</a>
+              <a href="#" className="hover:text-bloom-green transition-colors">Instagram</a>
+              <a href="#" className="hover:text-bloom-green transition-colors">Contact</a>
+            </div>
+            
+            <p className="text-bloom-cream/60 text-sm">
+              © 2024 Bloomlog. Made with 💚 for mindful growth.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };

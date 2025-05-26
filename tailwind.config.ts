@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -18,6 +19,10 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				'playfair': ['Playfair Display', 'serif'],
+				'inter': ['Inter', 'sans-serif'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -61,7 +66,21 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// Bloomlog custom colors
+				bloom: {
+					green: '#A8DADC',
+					lavender: '#CDB4DB',
+					beige: '#FDF6EC',
+					teal: '#70C1B3',
+					coral: '#FFB4A2',
+					navy: '#2D3142',
+					cream: '#FAF9F6'
 				}
+			},
+			backgroundImage: {
+				'bloom-gradient': 'linear-gradient(135deg, #A8DADC 0%, #CDB4DB 100%)',
+				'bloom-gradient-soft': 'linear-gradient(135deg, #A8DADC 0%, #CDB4DB 50%, #FDF6EC 100%)',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -84,11 +103,42 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'bloom': {
+					'0%, 100%': {
+						transform: 'scale(1)',
+						opacity: '1'
+					},
+					'50%': {
+						transform: 'scale(1.05)',
+						opacity: '0.8'
+					}
+				},
+				'fade-in': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateY(20px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateY(0)'
+					}
+				},
+				'float': {
+					'0%, 100%': {
+						transform: 'translateY(0px)'
+					},
+					'50%': {
+						transform: 'translateY(-10px)'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'bloom': 'bloom 3s ease-in-out infinite',
+				'fade-in': 'fade-in 0.6s ease-out',
+				'float': 'float 6s ease-in-out infinite'
 			}
 		}
 	},

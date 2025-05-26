@@ -1,9 +1,9 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
 import { Flower2, Heart, Mic, TrendingUp, Moon, Sun, Check } from 'lucide-react';
+import { supabase } from '@/lib/supabaseClient';
 
 const Index = () => {
   const [email, setEmail] = useState('');
@@ -11,18 +11,53 @@ const Index = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isDark, setIsDark] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (email) {
-      // Store in localStorage as placeholder
-      const waitlistData = { email, name, timestamp: new Date().toISOString() };
-      localStorage.setItem('bloomlog-waitlist', JSON.stringify(waitlistData));
-      
-      setIsSubmitted(true);
-      toast({
-        title: "Welcome to Bloomlog! 🌱",
-        description: "You're on the waitlist. We'll be in touch soon!",
-      });
+      try {
+        const { data, error } = await supabase
+          .from('wishlist')
+          .insert([{ email, name: name || null }])
+          .select();
+
+        if (error) {
+          console.error('Error inserting into Supabase:', error);
+          // Check for unique constraint violation (PostgreSQL error code 23505)
+          if (error.code === '23505' || (error.message && error.message.includes('violates unique constraint'))) {
+            toast({
+              title: "Already on the list!",
+              description: "This email address has already been registered. We'll keep you updated!",
+              variant: "default", // Or another appropriate variant
+            });
+          } else {
+            toast({
+              title: "Uh oh! Something went wrong.",
+              description: "There was a problem saving your details. Please try again. Details: " + error.message,
+              variant: "destructive",
+            });
+          }
+          return;
+        }
+
+        console.log('Successfully inserted:', data);
+        setIsSubmitted(true);
+        toast({
+          title: "Welcome to Bloomlog! 🌱",
+          description: "You're on the waitlist. We'll be in touch soon!",
+        });
+
+      } catch (err) {
+        console.error('Unexpected error:', err);
+        let errorMessage = "An unexpected error occurred. Please try again.";
+        if (err instanceof Error) {
+          errorMessage = err.message;
+        }
+        toast({
+          title: "Oops! Unexpected Error",
+          description: errorMessage,
+          variant: "destructive",
+        });
+      }
     }
   };
 

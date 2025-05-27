@@ -78,7 +78,7 @@ const Index = () => {
       </button>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen bg-bloom-gradient dark:bg-gradient-to-br dark:from-bloom-navy dark:to-bloom-navy/90 flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen bg-hero-cover bg-cover bg-no-repeat flex items-center justify-center overflow-hidden">
         {/* Floating elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 left-10 w-20 h-20 bg-bloom-coral/20 rounded-full animate-float"></div>
@@ -89,9 +89,9 @@ const Index = () => {
         <div className="container mx-auto px-6 text-center relative z-10">
           <div className="animate-fade-in">
             {/* Logo/Icon */}
-            <div className="mb-8 flex justify-center">
-              <div className="p-4 bg-white/20 dark:bg-white/10 rounded-full backdrop-blur-sm animate-bloom">
-                <Flower2 className="w-16 h-16 text-bloom-teal dark:text-bloom-green" />
+            <div className="mb-4 flex justify-center">
+              <div className="p-4 bg-white/20 rounded-full backdrop-blur-sm animate-bloom">
+                <Flower2 className="w-12 h-12 text-bloom-teal" />
               </div>
             </div>
 
@@ -150,7 +150,7 @@ const Index = () => {
       </section>
 
       {/* About Section */}
-      <section className="py-20 lg:py-32 bg-bloom-beige dark:bg-bloom-navy">
+      <section className="py-20 lg:py-32 bg-bloom-beige dark:bg-bloom-navy border-b border-bloom-green-light">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="font-playfair text-4xl md:text-5xl font-bold text-bloom-navy dark:text-bloom-cream mb-8">
@@ -161,8 +161,8 @@ const Index = () => {
               That's why Bloomlog calls you to journal, makes it easy, quick, and personal.
             </p>
             <div className="bg-white/60 dark:bg-bloom-navy/60 backdrop-blur-sm rounded-2xl p-8 md:p-12">
-              <p className="text-lg md:text-xl text-bloom-navy dark:text-bloom-cream font-medium italic">
-                "Just one minute a day can transform how you understand yourself and navigate your emotions."
+              <p className="text-lg text-bloom-navy dark:text-bloom-cream font-normal italic">
+                " Just one minute a day can transform how you understand yourself and navigate your emotions. "
               </p>
             </div>
           </div>
@@ -170,7 +170,7 @@ const Index = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 lg:py-32 bg-white/40 dark:bg-bloom-navy/40">
+      <section className="py-20 lg:py-32 border-t border-bloom-green-light">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="font-playfair text-4xl md:text-5xl font-bold text-bloom-navy dark:text-bloom-cream mb-6">
@@ -204,6 +204,17 @@ const Index = () => {
               </p>
             </div>
 
+            {/* Feature 4 */}
+            <div className="text-center group">
+              <div className="w-20 h-20 mx-auto mb-6 bg-bloom-teal/20 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+                <TrendingUp className="w-10 h-10 text-bloom-teal" />
+              </div>
+              <h3 className="font-semibold text-xl text-bloom-navy dark:text-bloom-cream mb-3">AI Insights</h3>
+              <p className="text-bloom-navy/70 dark:text-bloom-cream/70 leading-relaxed">
+                Gentle summaries of your emotional patterns and growth over time.
+              </p>
+            </div>
+
             {/* Feature 3 */}
             <div className="text-center group">
               <div className="w-20 h-20 mx-auto mb-6 bg-bloom-coral/20 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
@@ -215,67 +226,15 @@ const Index = () => {
               </p>
             </div>
 
-            {/* Feature 4 */}
-            <div className="text-center group">
-              <div className="w-20 h-20 mx-auto mb-6 bg-bloom-teal/20 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
-                <TrendingUp className="w-10 h-10 text-bloom-teal" />
-              </div>
-              <h3 className="font-semibold text-xl text-bloom-navy dark:text-bloom-cream mb-3">AI Insights</h3>
-              <p className="text-bloom-navy/70 dark:text-bloom-cream/70 leading-relaxed">
-                Gentle summaries of your emotional patterns and growth over time.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Signup Section */}
-      <section className="py-20 lg:py-32 bg-bloom-gradient-soft dark:bg-gradient-to-br dark:from-bloom-navy dark:via-bloom-navy/95 dark:to-bloom-navy">
-        <div className="container mx-auto px-6 text-center">
-          <div className="max-w-2xl mx-auto">
-            <h2 className="font-playfair text-4xl md:text-5xl font-bold text-bloom-navy dark:text-bloom-cream mb-6">
-              Be the first to try Bloomlog
-            </h2>
-            <p className="text-xl text-bloom-navy/70 dark:text-bloom-cream/70 mb-12">
-              Join our growing community of mindful reflectors. We're launching soon.
-            </p>
-
-            {!isSubmitted && (
-              <form onSubmit={handleSubmit} className="max-w-md mx-auto space-y-4">
-                <div className="space-y-3">
-                  <Input
-                    type="text"
-                    placeholder="Your name (optional)"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="w-full px-6 py-4 text-lg bg-white/90 dark:bg-bloom-navy/90 border-bloom-green/30 focus:border-bloom-teal rounded-full"
-                  />
-                  <Input
-                    type="email"
-                    placeholder="Your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    className="w-full px-6 py-4 text-lg bg-white/90 dark:bg-bloom-navy/90 border-bloom-green/30 focus:border-bloom-teal rounded-full"
-                  />
-                </div>
-                <Button 
-                  type="submit"
-                  className="w-full py-4 text-lg bg-bloom-teal hover:bg-bloom-teal/90 text-white rounded-full font-medium transition-all duration-200 hover:scale-105 hover:shadow-xl"
-                >
-                  Get early access ✨
-                </Button>
-              </form>
-            )}
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-16 bg-bloom-navy dark:bg-bloom-navy/90 text-bloom-cream">
+      <footer className="py-16 bg-bloom-navy/80 dark:bg-bloom-navy/90 text-bloom-cream border-t border-bloom-green-light">
         <div className="container mx-auto px-6">
           <div className="text-center mb-8">
-            <div className="flex justify-center mb-6">
+            <div className="flex justify-center mb-1">
               <Flower2 className="w-8 h-8 text-bloom-green" />
             </div>
             <h3 className="font-playfair text-2xl font-bold mb-4">Bloomlog</h3>
@@ -298,7 +257,7 @@ const Index = () => {
             </div>
             
             <p className="text-bloom-cream/60 text-sm">
-              © 2024 Bloomlog. Made with 💚 for mindful growth.
+              © 2025 Bloomlog. Made with 💚 for mindful growth.
             </p>
           </div>
         </div>

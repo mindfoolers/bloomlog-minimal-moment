@@ -140,6 +140,9 @@ export default {
 				'fade-in': 'fade-in 0.6s ease-out',
 				'float': 'float 6s ease-in-out infinite'
 			}
+		},
+		backgroundImage: {
+			'hero-cover': "url('/images/hero-cover.webp')",
 		}
 	},
 	plugins: [require("tailwindcss-animate")],

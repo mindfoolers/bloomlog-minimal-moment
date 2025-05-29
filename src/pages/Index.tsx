@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
-import { Flower2, Heart, Mic, TrendingUp, Moon, Sun, Check } from 'lucide-react';
+import { Moon, Sun, Check } from 'lucide-react';
 import { supabase } from '@/lib/supabaseClient';
+import { FeatureCard } from '@/components/FeatureCard';
 
 const Index = () => {
   const [email, setEmail] = useState('');
@@ -78,7 +79,7 @@ const Index = () => {
       </button>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen bg-hero-cover bg-cover bg-no-repeat flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden border-b border-bloom-green-light">
         {/* Floating elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 left-10 w-20 h-20 bg-bloom-coral/20 rounded-full animate-float"></div>
@@ -89,9 +90,9 @@ const Index = () => {
         <div className="container mx-auto px-6 text-center relative z-10">
           <div className="animate-fade-in">
             {/* Logo/Icon */}
-            <div className="mb-4 flex justify-center">
-              <div className="p-4 bg-white/20 rounded-full backdrop-blur-sm animate-bloom">
-                <Flower2 className="w-12 h-12 text-bloom-teal" />
+            <div className="mb-2 flex justify-center">
+              <div className="p-1 bg-white/20 rounded-full backdrop-blur-sm animate-bloom">
+                <img src="/logo.png" alt="Bloomlog" className="w-24 h-24" />
               </div>
             </div>
 
@@ -127,9 +128,9 @@ const Index = () => {
                 </div>
                 <Button 
                   type="submit"
-                  className="w-full py-4 text-lg bg-bloom-teal hover:bg-bloom-teal/90 text-white rounded-full font-medium transition-all duration-200 hover:scale-105 hover:shadow-lg"
+                  className="w-full py-4 text-lg font-medium bg-bloom-teal hover:bg-bloom-teal/90 text-white rounded-full font-medium transition-all duration-200 hover:scale-105 hover:shadow-lg"
                 >
-                  Join the waitlist 🌱
+                  Join the waitlist
                 </Button>
               </form>
             ) : (
@@ -183,48 +184,40 @@ const Index = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
             {/* Feature 1 */}
-            <div className="text-center group">
-              <div className="w-20 h-20 mx-auto mb-6 bg-bloom-green/20 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
-                <Heart className="w-10 h-10 text-bloom-teal" />
-              </div>
-              <h3 className="font-semibold text-xl text-bloom-navy dark:text-bloom-cream mb-3">1-Minute Reflections</h3>
-              <p className="text-bloom-navy/70 dark:text-bloom-cream/70 leading-relaxed">
-                Quick, thoughtful prompts that fit into any moment of your day.
-              </p>
-            </div>
+            <FeatureCard
+              icon={<span className="text-2xl">💚</span>}
+              title="1-Minute Reflections"
+              subtitle="Pause. Breathe. Express."
+              description="Effortless prompts designed to fit into even your busiest moments. Reflect daily in just 60 seconds."
+              bgColor="bg-bloom-green/20"
+            />
 
             {/* Feature 2 */}
-            <div className="text-center group">
-              <div className="w-20 h-20 mx-auto mb-6 bg-bloom-lavender/20 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
-                <div className="text-2xl">😊</div>
-              </div>
-              <h3 className="font-semibold text-xl text-bloom-navy dark:text-bloom-cream mb-3">Mood Check-ins</h3>
-              <p className="text-bloom-navy/70 dark:text-bloom-cream/70 leading-relaxed">
-                Track your emotional journey with simple, intuitive emoji selections.
-              </p>
-            </div>
-
-            {/* Feature 4 */}
-            <div className="text-center group">
-              <div className="w-20 h-20 mx-auto mb-6 bg-bloom-teal/20 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
-                <TrendingUp className="w-10 h-10 text-bloom-teal" />
-              </div>
-              <h3 className="font-semibold text-xl text-bloom-navy dark:text-bloom-cream mb-3">AI Insights</h3>
-              <p className="text-bloom-navy/70 dark:text-bloom-cream/70 leading-relaxed">
-                Gentle summaries of your emotional patterns and growth over time.
-              </p>
-            </div>
+            <FeatureCard
+              icon={<span className="text-2xl">😊</span>}
+              title="Mood Check-ins"
+              subtitle="Feel it. Name it. Track it."
+              description="Capture your emotional state with a tap—simple emojis that map your inner world over time."
+              bgColor="bg-bloom-lavender/20"
+            />
 
             {/* Feature 3 */}
-            <div className="text-center group">
-              <div className="w-20 h-20 mx-auto mb-6 bg-bloom-coral/20 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
-                <Mic className="w-10 h-10 text-bloom-teal" />
-              </div>
-              <h3 className="font-semibold text-xl text-bloom-navy dark:text-bloom-cream mb-3">Voice Journaling</h3>
-              <p className="text-bloom-navy/70 dark:text-bloom-cream/70 leading-relaxed">
-                Call in your thoughts when typing isn't convenient. Coming soon.
-              </p>
-            </div>
+            <FeatureCard
+              icon={<span className="text-2xl">📈</span>}
+              title="AI Insights"
+              subtitle="See your growth unfold."
+              description="Your private reflections, gently decoded. Discover patterns, trends, and guidance tailored to your emotional journey."
+              bgColor="bg-bloom-teal/20"
+            />
+
+            {/* Feature 4 */}
+            <FeatureCard
+              icon={<span className="text-2xl">🎙️</span>}
+              title="Voice Journaling"
+              subtitle="Speak your mind, hands-free."
+              description="Too tired to type? Bloomlog will call you—just talk, and your feelings are saved."
+              bgColor="bg-bloom-coral/20"
+            />
 
           </div>
         </div>
@@ -235,7 +228,7 @@ const Index = () => {
         <div className="container mx-auto px-6">
           <div className="text-center mb-8">
             <div className="flex justify-center mb-1">
-              <Flower2 className="w-8 h-8 text-bloom-green" />
+              <img src="/logo.png" alt="Bloomlog" className="w-8 h-8" />
             </div>
             <h3 className="font-playfair text-2xl font-bold mb-4">Bloomlog</h3>
             
@@ -251,9 +244,9 @@ const Index = () => {
             
             {/* Social Links */}
             <div className="flex justify-center space-x-6 mb-8 text-bloom-cream/70">
-              <a href="#" className="hover:text-bloom-green transition-colors">Twitter</a>
-              <a href="#" className="hover:text-bloom-green transition-colors">Instagram</a>
-              <a href="#" className="hover:text-bloom-green transition-colors">Contact</a>
+              <a href="https://x.com/bloomlog62203" className="hover:text-bloom-green transition-colors">Twitter</a>
+              {/* <a href="https://www.instagram.com/bloomlog" className="hover:text-bloom-green transition-colors">Instagram</a> */}
+              <a href="mailto:reach.bloomlog@gmail.com" className="hover:text-bloom-green transition-colors">Contact</a>
             </div>
             
             <p className="text-bloom-cream/60 text-sm">
